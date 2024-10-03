@@ -18,7 +18,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to={"/about"}
+          to={"/about us"}
           className={({ isActive }) =>
             isActive
               ? "bg-gradient-to-r from-[#007991] to-[#78ffd6] bg-clip-text text-transparent font-semibold "
@@ -66,7 +66,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to={"/help"}
+          to={"/Help center"}
           className={({ isActive }) =>
             isActive
               ? "bg-gradient-to-r from-[#007991] to-[#78ffd6] bg-clip-text text-transparent font-semibold "
