@@ -3,6 +3,7 @@ import sideImg from "../assets/sidebar.png";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
 const SignUp = () => {
   const { createUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -23,6 +24,14 @@ const SignUp = () => {
       });
 
     const userData = { name, email, password, role: "user" };
+    axios
+      .post("http://localhost:4000/users", userData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="my-10">

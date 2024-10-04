@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
+
 const SingIn = () => {
   const { signInUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -19,8 +20,9 @@ const SingIn = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error('Something went wrong')
+        toast.error("Something went wrong");
       });
+  
   };
   return (
     <div className="my-10">
