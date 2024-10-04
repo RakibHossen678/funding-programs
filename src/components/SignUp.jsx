@@ -22,7 +22,7 @@ const SignUp = () => {
         toast.error("Something went wrong");
       });
 
-    const useData = { name, email, password, role: "user" };
+    const userData = { name, email, password, role: "user" };
   };
   return (
     <div className="my-10">
