@@ -1,6 +1,11 @@
 import { useState } from "react";
+import tazapay from "../assets/tazapy.png";
+import proceed from "../assets/proceed.png";
+import toast from "react-hot-toast";
 
 const CheckoutPage = () => {
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [isCreateAccountChecked, setIsCreateAccountChecked] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,27 +16,58 @@ const CheckoutPage = () => {
     postcode: "",
     phone: "",
     email: "",
-    addons: "",
+    addon: {
+      name: "7 day payouts vs 14 Days +5%",
+      percentage: 5,
+    },
   });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    console.log(value, id);
+    if (id === "addon") {
+      setFormData({
+        ...formData,
+        addon: {
+          name: value,
+          percentage: value === "7 day payouts vs 14 Days +5%" ? 5 : 0,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [id]: value,
+      });
+    }
+  };
+
+  const handleTermsChange = (e) => {
+    setIsTermsChecked(e.target.checked);
+  };
+
+  const handleCreateAccountChange = (e) => {
+    setIsCreateAccountChecked(e.target.checked);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    // Add logic to handle form submission, such as making an API call
+    if (!isTermsChecked || !isCreateAccountChecked) {
+      toast.error(
+        "Please check the terms and conditions and create an account"
+      );
+    } else {
+      console.log("Form Data:", formData);
+    }
   };
 
+  console.log(isTermsChecked, isCreateAccountChecked);
   return (
     <div className="min-h-screen  text-white py-10 px-5">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
         <div className="bg-[#050907] p-8 rounded-lg font-poppins">
           <h2 className="text-2xl  font-semibold mb-4">Billing Details</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-3">
               <div>
                 <label htmlFor="first-name" className="block text-sm pb-2">
                   First Name *
@@ -61,12 +97,11 @@ const CheckoutPage = () => {
                 />
               </div>
             </div>
-            <div>
+            <div className="pb-3">
               <label htmlFor="company-name" className="block text-sm p-2">
                 Company Name (Optional)
               </label>
               <input
-                required
                 type="text"
                 id="companyName"
                 value={formData.companyName}
@@ -75,7 +110,7 @@ const CheckoutPage = () => {
                 placeholder="Company Name"
               />
             </div>
-            <div>
+            <div className="pb-3">
               <label htmlFor="country" className="block text-sm pb-2">
                 Country / Region *
               </label>
@@ -86,13 +121,21 @@ const CheckoutPage = () => {
                 onChange={handleChange}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg p-2"
               >
-                <option className="text-[#a2a2a2]">
+                <option value="" disabled className="text-[#a2a2a2]">
                   Select a country / region
                 </option>
-                {/* Add more country options */}
+                <option value="bangladesh" className="text-[#a2a2a2]">
+                  Bangladesh
+                </option>
+                <option value="india" className="text-[#a2a2a2]">
+                  India
+                </option>
+                <option value="pakistan" className="text-[#a2a2a2]">
+                  Pakistan
+                </option>
               </select>
             </div>
-            <div>
+            <div className="pb-3">
               <label htmlFor="street-address" className="block text-sm pb-2">
                 Street Address *
               </label>
@@ -106,7 +149,7 @@ const CheckoutPage = () => {
                 placeholder="Street Address"
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-3">
               <div>
                 <label htmlFor="city" className="block text-sm pb-2">
                   Town / City *
@@ -136,7 +179,7 @@ const CheckoutPage = () => {
                 />
               </div>
             </div>
-            <div>
+            <div className="pb-3">
               <label htmlFor="phone" className="block text-sm pb-2">
                 Phone *
               </label>
@@ -177,10 +220,13 @@ const CheckoutPage = () => {
                 <input
                   type="radio"
                   name="addons"
-                  id="addon1"
+                  id="addon"
                   className="mr-2"
-                  value="addon1"
-                  // onChange={handleChange}
+                  value="7 day payouts vs 14 Days +5%"
+                  onChange={handleChange}
+                  checked={
+                    formData.addon.name === "7 day payouts vs 14 Days +5%"
+                  }
                 />
                 <label htmlFor="addon1" className="text-sm">
                   7 day payouts vs 14 Days +5%
@@ -190,10 +236,13 @@ const CheckoutPage = () => {
                 <input
                   type="radio"
                   name="addons"
-                  id="addon2"
+                  id="addon"
                   className="mr-2"
-                  value="addon2"
-                  // onChange={handleChange}
+                  value="90% profit split vs 85% +0%"
+                  onChange={handleChange}
+                  checked={
+                    formData.addon.name === "90% profit split vs 85% +0%"
+                  }
                 />
                 <label htmlFor="addon2" className="text-sm">
                   90% profit split vs 85% +0%
@@ -203,10 +252,11 @@ const CheckoutPage = () => {
                 <input
                   type="radio"
                   name="addons"
-                  id="addon3"
+                  id="addon"
                   className="mr-2"
-                  value="addon3"
-                  // onChange={handleChange}
+                  value="Both (Save 5%) +0%"
+                  onChange={handleChange}
+                  checked={formData.addon.name === "Both (Save 5%) +0%"}
                 />
                 <label htmlFor="addon3" className="text-sm">
                   Both (Save 5%) +0%
@@ -228,8 +278,8 @@ const CheckoutPage = () => {
                 <span>$400.00</span>
               </div>
               <div className="flex justify-between">
-                <span>7 day payouts vs 14 Days</span>
-                <span>+$20.00</span>
+                <span>{formData.addon.name}</span>
+                <span>+${formData.addon.percentage}</span>
               </div>
               <div className="flex justify-between font-bold">
                 <span>Total</span>
@@ -240,26 +290,47 @@ const CheckoutPage = () => {
 
           {/* Payment Section */}
           <div className="bg-[#050907] p-8 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Tazapay</h2>
+            <h2 className="text-xl font-semibold mb-4 flex items-center space-x-2">
+              <img src={tazapay} alt="" />
+              <span className="font-poppins">Tazapay</span>
+            </h2>
             <p className="text-sm mb-4">
-              Your personal data will be used to process your order and support
-              your experience throughout this website.
+              Your personal data will be used to process your order, support
+              your experience throughout this website, and for other purposes
+              described in our{" "}
+              <span className="text-[#78ffd6]">privacy policy</span>.
             </p>
             <div className="space-y-2">
               <div className="flex items-center">
-                <input type="checkbox" id="agree-terms" className="mr-2" />
+                <input
+                  type="checkbox"
+                  checked={isTermsChecked}
+                  onChange={handleTermsChange}
+                  id="agree-terms"
+                  className="mr-2"
+                />
                 <label htmlFor="agree-terms" className="text-sm">
                   I have read and agree to the website terms and conditions.
                 </label>
               </div>
               <div className="flex items-center">
-                <input type="checkbox" id="create-account" className="mr-2" />
+                <input
+                  type="checkbox"
+                  checked={isCreateAccountChecked}
+                  onChange={handleCreateAccountChange}
+                  id="create-account"
+                  className="mr-2"
+                />
                 <label htmlFor="create-account" className="text-sm">
                   Create a new Account with these information
                 </label>
               </div>
             </div>
-            <button className="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-lg">
+            <button
+              onClick={handleSubmit}
+              className="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white py-3 px-4 rounded-lg flex  items-center justify-center space-x-2"
+            >
+              <img className="pr-2" src={proceed} alt="" />
               Proceed to Payment
             </button>
           </div>
