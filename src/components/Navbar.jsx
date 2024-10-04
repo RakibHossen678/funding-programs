@@ -121,7 +121,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <Link
-            to={"/signUp"}
+            to={"/signIn"}
             className="flex  space-x-2 border-2 border-[#78ffd6] px-5 py-2 rounded-full bg-[#3f4b4558]"
           >
             <AiOutlineAppstoreAdd size={26} className="text-white" />
