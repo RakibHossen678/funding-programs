@@ -1,11 +1,9 @@
 import Funding_Program_Table from "./Funding_Program_Table";
-import FundingData from "../../public/data.json";
 
-const Funding_Program = () => {
-  console.log(FundingData)
+const Funding_Program = ({ fundingPrograms }) => {
   return (
     <div>
-      <Funding_Program_Table  FundingData={FundingData}/>
+      <Funding_Program_Table fundingPrograms={fundingPrograms} />
     </div>
   );
 };
