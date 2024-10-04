@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 const CheckoutPage = () => {
   const [isTermsChecked, setIsTermsChecked] = useState(false);
   const [isCreateAccountChecked, setIsCreateAccountChecked] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,6 +23,8 @@ const CheckoutPage = () => {
     },
   });
 
+  let totalPrice = (299 * formData.addon.percentage) / 100 + 299;
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     console.log(value, id);
@@ -32,6 +35,7 @@ const CheckoutPage = () => {
           name: value,
           percentage: value === "7 day payouts vs 14 Days +5%" ? 5 : 0,
         },
+        totalPrice,
       });
     } else {
       setFormData({
@@ -60,7 +64,6 @@ const CheckoutPage = () => {
     }
   };
 
-  console.log(isTermsChecked, isCreateAccountChecked);
   return (
     <div className="min-h-screen  text-white py-10 px-5">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
@@ -275,7 +278,7 @@ const CheckoutPage = () => {
               </div>
               <div className="flex justify-between">
                 <span>2 Step - Power Challenge (100K) × 1</span>
-                <span>$400.00</span>
+                <span>$299.00</span>
               </div>
               <div className="flex justify-between">
                 <span>{formData.addon.name}</span>
@@ -283,7 +286,7 @@ const CheckoutPage = () => {
               </div>
               <div className="flex justify-between font-bold">
                 <span>Total</span>
-                <span>$420.00</span>
+                <span>${totalPrice.toFixed(2)}</span>
               </div>
             </div>
           </div>
