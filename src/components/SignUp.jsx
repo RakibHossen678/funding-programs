@@ -1,6 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import sideImg from "../assets/sidebar.png";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import toast from "react-hot-toast";
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    createUser(email, password)
+      .then((result) => {
+        toast.success("User created successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong");
+      });
+
+    const useData = { name, email, password, role: "user" };
+  };
   return (
     <div className="my-10">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-[#050907] rounded-lg shadow-lg  lg:max-w-4xl">
@@ -19,7 +42,7 @@ const SignUp = () => {
             </h2>
           </div>
 
-          <form className="font-poppins">
+          <form className="font-poppins" onSubmit={handleSubmit}>
             <div className="mt-4">
               <label className="block mb-2 text-[16px]  text-white">
                 Name*
@@ -27,7 +50,8 @@ const SignUp = () => {
               <input
                 required
                 className="block w-full px-4 py-2 bg-[#222624] border rounded-lg  focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
-                type="email"
+                type="text"
+                name="name"
                 placeholder="Enter your name "
               />
             </div>
@@ -39,6 +63,7 @@ const SignUp = () => {
                 required
                 className="block w-full px-4 py-2 bg-[#222624] border rounded-lg  focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                 type="email"
+                name="email"
                 placeholder="Enter email address"
               />
             </div>
@@ -54,12 +79,16 @@ const SignUp = () => {
                 id="loggingPassword"
                 className="block w-full px-4 py-2 bg-[#222624] border rounded-lg  focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
                 type="password"
+                name="password"
                 placeholder="Enter your password"
               />
             </div>
 
             <div className="mt-6">
-              <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gradient-to-r from-[#007991] to-[#78ffd6] rounded-lg  ">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gradient-to-r from-[#007991] to-[#78ffd6] rounded-lg  "
+              >
                 Sign In
               </button>
             </div>

@@ -1,7 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { AuthContext } from "../Provider/AuthProvider";
+import { useContext } from "react";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user)
   const nav = (
     <>
       <li>
@@ -110,9 +114,12 @@ const Navbar = () => {
               {nav}
             </ul>
           </div>
-          <a className=" text-2xl font-pt bg-gradient-to-r from-[#007991] to-[#78ffd6] bg-clip-text text-transparent font-semibold ">
+          <Link
+            to={"/"}
+            className="cursor-pointer text-2xl font-pt bg-gradient-to-r from-[#007991] to-[#78ffd6] bg-clip-text text-transparent font-semibold "
+          >
             FundingTrail
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="lg:space-x-8  md:space-x-4 menu-horizontal px-1 text-[#fff]">
@@ -120,15 +127,44 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link
-            to={"/signIn"}
-            className="flex  space-x-2 border-2 border-[#78ffd6] px-5 py-2 rounded-full bg-[#3f4b4558]"
-          >
-            <AiOutlineAppstoreAdd size={26} className="text-white" />
-            <span className="font-medium text-white font-vietnam">
-              Client Area
-            </span>
-          </Link>
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Tailwind CSS Navbar component"
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-[#050907] rounded-box z-[10] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a className="justify-between">{user?.email}</a>
+                </li>
+
+                <li>
+                  <button onClick={() => logOut()}>Logout</button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link
+              to={"/signIn"}
+              className="flex  space-x-2 border-2 border-[#78ffd6] px-5 py-2 rounded-full bg-[#3f4b4558]"
+            >
+              <AiOutlineAppstoreAdd size={26} className="text-white" />
+              <span className="font-medium text-white font-vietnam">
+                Client Area
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </section>
