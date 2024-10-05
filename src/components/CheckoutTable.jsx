@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tazapay from "../assets/tazapy.png";
 import proceed from "../assets/proceed.png";
 import toast from "react-hot-toast";
@@ -6,6 +6,7 @@ import axios from "axios";
 
 const CheckoutPage = () => {
   const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [isCreateAccountChecked, setIsCreateAccountChecked] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -22,9 +23,17 @@ const CheckoutPage = () => {
       name: "7 day payouts vs 14 Days +5%",
       percentage: 5,
     },
+    totalPrice,
   });
 
-  let totalPrice = (299 * formData.addon.percentage) / 100 + 299;
+  useEffect(() => {
+    const newTotalPrice = (299 * formData.addon.percentage) / 100 + 299;
+    setTotalPrice(newTotalPrice);
+    setFormData((prevData) => ({
+      ...prevData,
+      totalPrice: newTotalPrice,
+    }));
+  }, [formData.addon.percentage]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -36,7 +45,6 @@ const CheckoutPage = () => {
           name: value,
           percentage: value === "7 day payouts vs 14 Days +5%" ? 5 : 0,
         },
-        totalPrice,
       });
     } else {
       setFormData({
@@ -56,18 +64,27 @@ const CheckoutPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isTermsChecked || !isCreateAccountChecked) {
       toast.error(
         "Please check the terms and conditions and create an account"
       );
-    } else {
-      console.log("Form Data:", formData);
-      //implement tazapay by using  database
+      return;
+    }
+
+    try {
       const { data } = await axios.post(
         "http://localhost:4000/payment",
         formData
       );
-      console.log(data);
+      // Log the response to see the payment URL
+      console.log("Response Data:", data);
+    } catch (error) {
+      console.error(
+        "Error in payment submission:",
+        error.response ? error.response.data : error.message
+      );
+      toast.error("An error occurred while processing the payment.");
     }
   };
 
