@@ -77,7 +77,6 @@ const CheckoutPage = () => {
         "http://localhost:4000/payment",
         formData
       );
-      // Log the response to see the payment URL
       console.log("Response Data:", data);
     } catch (error) {
       console.error(
@@ -237,9 +236,7 @@ const CheckoutPage = () => {
           </form>
         </div>
 
-        {/* Order Summary and Payment */}
         <div className="space-y-8">
-          {/* Available Addons */}
           <div className="bg-[#050907] p-8 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Available Addons</h2>
             <div className="space-y-2">
@@ -292,7 +289,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Order Summary */}
           <div className="bg-[#050907] p-8 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Your Order</h2>
             <div className="space-y-2">
@@ -315,7 +311,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Payment Section */}
           <div className="bg-[#050907] p-8 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 flex items-center space-x-2">
               <img src={tazapay} alt="" />

@@ -27,7 +27,7 @@ const Home = () => {
       <h1 className="capitalized text-[40px] font-semibold  font-vietnam ">
         Pick Your funding programs
       </h1>
-      <div className="space-x-5 my-6 flex justify-center items-center flex-wrap">
+      <div className="space-x-5 space-y-4 lg:space-y-0 mx-3 lg:mx-0 my-6 flex justify-center items-center flex-wrap">
         <button
           onClick={() => setGetType("Standard Challenge")}
           className={`border-2 w-[360px] py-3 rounded-full text-[#78ffd6] border-[#78ffd6] ${
@@ -47,7 +47,7 @@ const Home = () => {
           Instant Funding
         </button>
       </div>
-      <div className="space-x-5 flex justify-center items-center flex-wrap">
+      <div className="space-x-5 space-y-4 lg:space-y-0 flex justify-center items-center flex-wrap">
         <button
           onClick={() => setPrice(100000)}
           className={`py-2 w-28 rounded-full text-[#78ffd6] border-[#78ffd6] ${
