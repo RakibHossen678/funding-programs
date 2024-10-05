@@ -25,7 +25,7 @@ const CheckoutPage = () => {
     },
     totalPrice,
   });
-
+  console.log(formData);
   useEffect(() => {
     const newTotalPrice = (299 * formData.addon.percentage) / 100 + 299;
     setTotalPrice(newTotalPrice);
@@ -150,13 +150,13 @@ const CheckoutPage = () => {
                 <option value="" disabled className="text-[#a2a2a2]">
                   Select a country / region
                 </option>
-                <option value="bangladesh" className="text-[#a2a2a2]">
+                <option value="BD" className="text-[#a2a2a2]">
                   Bangladesh
                 </option>
-                <option value="india" className="text-[#a2a2a2]">
+                <option value="IN" className="text-[#a2a2a2]">
                   India
                 </option>
-                <option value="pakistan" className="text-[#a2a2a2]">
+                <option value="PK" className="text-[#a2a2a2]">
                   Pakistan
                 </option>
               </select>
