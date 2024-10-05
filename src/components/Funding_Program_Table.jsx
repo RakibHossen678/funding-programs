@@ -11,7 +11,7 @@ import UpdateModal from "./UpdateModal";
 const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
   const { user } = useContext(AuthContext);
   const [getUser, setGetUser] = useState({});
-
+  
   useEffect(() => {
     const getUsers = async () => {
       if (user?.email) {

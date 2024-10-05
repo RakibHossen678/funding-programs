@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import PropTypes from "prop-types";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const trigger = useRef(null);
   const modal = useRef(null);
-  console.log(id);
   // Close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -34,20 +35,33 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
   });
 
   const filteredProgram = fundingPrograms.filter(
-    (program) => program.id === id
+    (program) => program._id === id
   );
-
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const description = form.desc.value;
-    const price = form.price.value;
-    const updatedService = {
+    const challenge = form.challenge.value;
+    const FundedTrader = form.trade.value;
+    const Verification = form.verification.value;
+    const updatedPrograms = {
+      type: filteredProgram[0].type,
       name,
-      description,
-      price,
+      challenge,
+      FundedTrader,
+      Verification,
+      price: filteredProgram[0].price,
     };
+
+    const { data } = await axios.put(
+      `http://localhost:4000/UpdatePrograms/${id}`,
+      updatedPrograms
+    );
+    const updatedFundingPrograms = fundingPrograms.map((program) =>
+      program._id === id ? updatedPrograms : program
+    );
+    setFundingPrograms(updatedFundingPrograms);
+    toast.success("Program Update Successfully");
 
     setModalOpen(false);
     form.reset();
@@ -70,7 +84,7 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
               ref={modal}
               className="w-full max-w-lg rounded-lg bg-[#050907] px-8 py-10 shadow-lg md:px-12"
             >
-              <h1 className="text-3xl font-bold  text-gray-800 mb-6">
+              <h1 className="text-3xl font-bold  text-white mb-6">
                 Update Service
               </h1>
               <form onSubmit={handleForm}>
@@ -79,10 +93,10 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
                     Name
                   </label>
                   <input
-                    defaultValue={filteredProgram?.name}
+                    defaultValue={filteredProgram[0]?.name}
                     name="name"
                     type="text"
-                    className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    className="w-full px-4 py-2 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                     placeholder="Enter program Name"
                     required
                   />
@@ -93,11 +107,11 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
                     Challenge
                   </label>
                   <input
-                    defaultValue={filteredProgram.challenge}
-                    name="desc"
-                    type="number"
+                    defaultValue={filteredProgram[0].challenge}
+                    name="challenge"
+                    type="text"
                     required
-                    className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    className="w-full px-4 py-2 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                     placeholder="Enter challenge"
                   />
                 </div>
@@ -107,10 +121,10 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
                     Funded Trader
                   </label>
                   <input
-                    defaultValue={filteredProgram.FundedTrader}
-                    name="price"
-                    type="number"
-                    className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    defaultValue={filteredProgram[0].FundedTrader}
+                    name="trade"
+                    type="text"
+                    className="w-full px-4 py-2 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                     placeholder="Enter FundedTrader"
                     required
                   />
@@ -120,10 +134,10 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
                     Verification
                   </label>
                   <input
-                    defaultValue={filteredProgram.Verification}
+                    defaultValue={filteredProgram[0].Verification}
                     name="verification"
-                    type="number"
-                    className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    type="text"
+                    className="w-full px-4 py-2 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                     placeholder="Enter verification"
                     required
                   />
