@@ -50,9 +50,9 @@
   {
     "type": "Instant Funding",
     "name": "Weekend Holding",
-    "challenge": "$299",
-    "FundedTrader": "$299",
-    "Verification": "$299",
+    "challenge": "$399",
+    "FundedTrader": "$399",
+    "Verification": "$399",
     "price": 100000
   }
 ]

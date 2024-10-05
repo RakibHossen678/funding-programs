@@ -95,7 +95,7 @@ const Home = () => {
         </button>
       </div>
       <div>
-        <Funding_Program fundingPrograms={fundingPrograms} />
+        <Funding_Program fundingPrograms={fundingPrograms} setFundingPrograms={setFundingPrograms} />
       </div>
     </div>
   );

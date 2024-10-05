@@ -4,8 +4,10 @@ import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
+import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 
-const Funding_Program_Table = ({ fundingPrograms }) => {
+const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
   const { user } = useContext(AuthContext);
   const [getUser, setGetUser] = useState({});
 
@@ -25,6 +27,24 @@ const Funding_Program_Table = ({ fundingPrograms }) => {
 
     getUsers();
   }, [user?.email]);
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:4000/program/${id}`
+      );
+      if (data.deletedCount > 0) {
+        const updatedPrograms = fundingPrograms.filter(
+          (program) => program._id !== id
+        );
+        setFundingPrograms(updatedPrograms);
+
+        toast.success("Program deleted successfully!");
+      }
+    } catch (error) {
+      toast.error("Failed to delete the program.");
+    }
+  };
 
   return (
     <div className="lg:flex  gap-10 flex-col lg:flex-row my-10">
@@ -62,6 +82,7 @@ const Funding_Program_Table = ({ fundingPrograms }) => {
                     <td className="px-4 py-4 flex space-x-2 border-t border-t-[#162d26]">
                       <span>
                         <AiFillDelete
+                          onClick={() => handleDelete(data._id)}
                           className="hover:scale-105 cursor-pointer"
                           size={21}
                         />
@@ -92,6 +113,11 @@ const Funding_Program_Table = ({ fundingPrograms }) => {
       </div>
     </div>
   );
+};
+
+Funding_Program_Table.propTypes = {
+  setFundingPrograms: PropTypes.func,
+  fundingPrograms: PropTypes.array,
 };
 
 export default Funding_Program_Table;
