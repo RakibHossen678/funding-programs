@@ -6,6 +6,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
+import UpdateModal from "./UpdateModal";
 
 const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
   const { user } = useContext(AuthContext);
@@ -88,9 +89,10 @@ const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
                         />
                       </span>
                       <span>
-                        <FaEdit
-                          className="hover:scale-105 cursor-pointer"
-                          size={21}
+                        <UpdateModal
+                          fundingPrograms={fundingPrograms}
+                          setFundingPrograms={setFundingPrograms}
+                          id={data._id}
                         />
                       </span>
                     </td>
