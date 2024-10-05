@@ -21,7 +21,6 @@ const Home = () => {
 
     fetchPrograms();
   }, [price, getType]);
-  console.log(getType);
 
   return (
     <div className="text-center mt-28 text-white">

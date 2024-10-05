@@ -2,6 +2,7 @@ import { useState } from "react";
 import tazapay from "../assets/tazapy.png";
 import proceed from "../assets/proceed.png";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const CheckoutPage = () => {
   const [isTermsChecked, setIsTermsChecked] = useState(false);
@@ -53,7 +54,7 @@ const CheckoutPage = () => {
     setIsCreateAccountChecked(e.target.checked);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isTermsChecked || !isCreateAccountChecked) {
       toast.error(
@@ -61,6 +62,12 @@ const CheckoutPage = () => {
       );
     } else {
       console.log("Form Data:", formData);
+      //implement tazapay by using  database
+      const { data } = await axios.post(
+        "http://localhost:4000/payment",
+        formData
+      );
+      console.log(data);
     }
   };
 

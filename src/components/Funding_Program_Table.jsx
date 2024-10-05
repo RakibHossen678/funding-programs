@@ -1,6 +1,31 @@
+import { useContext, useEffect, useState } from "react";
 import Funding_Program_sidebar from "./Funding_Program_sidebar";
+import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
+import { AiFillDelete } from "react-icons/ai";
+import { FaEdit } from "react-icons/fa";
 
 const Funding_Program_Table = ({ fundingPrograms }) => {
+  const { user } = useContext(AuthContext);
+  const [getUser, setGetUser] = useState({});
+
+  useEffect(() => {
+    const getUsers = async () => {
+      if (user?.email) {
+        try {
+          const { data } = await axios.get(
+            `http://localhost:4000/getUser/${user.email}`
+          );
+          setGetUser(data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+
+    getUsers();
+  }, [user?.email]);
+
   return (
     <div className="lg:flex  gap-10 flex-col lg:flex-row my-10">
       {/* Table */}
@@ -13,6 +38,9 @@ const Funding_Program_Table = ({ fundingPrograms }) => {
                 <th className="px-4 py-2 pb-3">Challenge</th>
                 <th className="px-4 py-2 pb-3">Funded Trader</th>
                 <th className="px-4 py-2 pb-3">Verification</th>
+                {getUser?.role === "admin" && (
+                  <th className="px-4 py-2 pb-3">Action</th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -30,6 +58,22 @@ const Funding_Program_Table = ({ fundingPrograms }) => {
                   <td className="px-4 py-4 border-t border-t-[#162d26]">
                     {data.Verification}
                   </td>
+                  {getUser?.role === "admin" && (
+                    <td className="px-4 py-4 flex space-x-2 border-t border-t-[#162d26]">
+                      <span>
+                        <AiFillDelete
+                          className="hover:scale-105 cursor-pointer"
+                          size={21}
+                        />
+                      </span>
+                      <span>
+                        <FaEdit
+                          className="hover:scale-105 cursor-pointer"
+                          size={21}
+                        />
+                      </span>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
