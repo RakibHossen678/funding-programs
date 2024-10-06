@@ -3,7 +3,6 @@ import Funding_Program_sidebar from "./Funding_Program_sidebar";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import { AiFillDelete } from "react-icons/ai";
-import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import UpdateModal from "./UpdateModal";
@@ -11,7 +10,7 @@ import UpdateModal from "./UpdateModal";
 const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
   const { user } = useContext(AuthContext);
   const [getUser, setGetUser] = useState({});
-  
+
   useEffect(() => {
     const getUsers = async () => {
       if (user?.email) {
@@ -104,7 +103,7 @@ const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
         ) : (
           <div className="flex justify-center items-center h-64 ">
             <h1 className="text-white text-xl font-semibold">
-              There don't have any data
+              There don{"'"}t have any data
             </h1>
           </div>
         )}
