@@ -5,8 +5,8 @@
 
 # admin Data
 
-- /_/_ email=rakib123@gmail.com
-- /_/_ password=1020304050
+-  email=rakib123@gmail.com
+-  password=1020304050
 
 #### Cloning and Running the Project
 
