@@ -1,8 +1,18 @@
-# React + Vite
+# FundingTrail
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [ChatSphere](https://fundingprograms-d66be.web.app/)
+- [github-server](https://github.com/RakibHossen678/funding-programs-server)
 
-Currently, two official plugins are available:
+# admin Data
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- /_/_ email=rakib123@gmail.com
+- /_/_ password=1020304050
+
+#### Cloning and Running the Project
+
+```sh
+git clone https://github.com/RakibHossen678/funding-programs
+npm install
+npm run dev
+
+```
