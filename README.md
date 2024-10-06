@@ -1,6 +1,6 @@
 # FundingTrail
 
-- [ChatSphere](https://fundingprograms-d66be.web.app/)
+- [FundingTrail](https://fundingprograms-d66be.web.app/)
 - [github-server](https://github.com/RakibHossen678/funding-programs-server)
 
 # admin Data
