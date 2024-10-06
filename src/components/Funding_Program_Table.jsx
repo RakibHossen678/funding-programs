@@ -16,7 +16,7 @@ const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
       if (user?.email) {
         try {
           const { data } = await axios.get(
-            `http://localhost:4000/getUser/${user.email}`
+            `https://funding-programs-server.vercel.app/getUser/${user.email}`
           );
           setGetUser(data);
         } catch (error) {
@@ -31,7 +31,7 @@ const Funding_Program_Table = ({ fundingPrograms, setFundingPrograms }) => {
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:4000/program/${id}`
+        `https://funding-programs-server.vercel.app/program/${id}`
       );
       if (data.deletedCount > 0) {
         const updatedPrograms = fundingPrograms.filter(

@@ -54,7 +54,7 @@ const UpdateModal = ({ setFundingPrograms, fundingPrograms, id }) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/UpdatePrograms/${id}`,
+      `https://funding-programs-server.vercel.app/UpdatePrograms/${id}`,
       updatedPrograms
     );
     const updatedFundingPrograms = fundingPrograms.map((program) =>

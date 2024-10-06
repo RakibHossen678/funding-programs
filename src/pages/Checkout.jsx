@@ -74,7 +74,7 @@ const Checkout = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/payment",
+        "https://funding-programs-server.vercel.app/payment",
         formData
       );
       toast.success("Payment Successful! ✔");
@@ -96,7 +96,7 @@ const Checkout = () => {
           formData={formData}
           handleChange={handleChange}
           isTermsChecked={isTermsChecked}
-          isCreateAccountChecked={isTermsChecked}
+          isCreateAccountChecked={isCreateAccountChecked}
           handleSubmit={handleSubmit}
         />
       </div>

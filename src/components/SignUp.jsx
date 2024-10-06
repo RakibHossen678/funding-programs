@@ -25,7 +25,7 @@ const SignUp = () => {
 
     const userData = { name, email, password, role: "user" };
     axios
-      .post("http://localhost:4000/users", userData)
+      .post("https://funding-programs-server.vercel.app/users", userData)
       .then((response) => {
         console.log(response);
       })

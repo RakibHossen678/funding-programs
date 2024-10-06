@@ -11,7 +11,7 @@ const Home = () => {
     const fetchPrograms = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/programs?type=${getType}&price=${price}`
+          `https://funding-programs-server.vercel.app/programs?type=${getType}&price=${price}`
         );
         setFundingPrograms(data);
       } catch (error) {
